@@ -53,9 +53,9 @@ fn main() {
 }
 
 fn run_input(letter: i32) -> i32 {
-    let mut rotor1 = rotors::Rotor::new(rotors::ENIGMA1_1, rotors::ENIGMA1_1_INVERSE, 0);
-    let mut rotor2 = rotors::Rotor::new(rotors::ENIGMA1_2, rotors::ENIGMA1_2_INVERSE, 0);
-    let mut rotor3 = rotors::Rotor::new(rotors::ENIGMA1_3, rotors::ENIGMA1_3_INVERSE, 0);
+    let mut rotor1 = rotors::Rotor::new(rotors::ENIGMA1_1, 0);
+    let mut rotor2 = rotors::Rotor::new(rotors::ENIGMA1_2, 0);
+    let mut rotor3 = rotors::Rotor::new(rotors::ENIGMA1_3, 0);
 
     let the_reflector = reflector::Reflector::new();
 
