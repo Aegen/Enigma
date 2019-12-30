@@ -41,6 +41,7 @@ fn main() {
     alpha_in.entry("Y").or_insert(24);
     alpha_in.entry("Z").or_insert(25);
 
+    // Setup rotor property objects
     let first_rotor = rotors::RotorProp {
         map: rotors::ENIGMA1_1,
         cursor: 0,
@@ -54,6 +55,7 @@ fn main() {
         cursor: 0,
     };
 
+    // Create rotor group
     let mut group = rotor_assembly::RotorAssembly::new(first_rotor, second_rotor, third_rotor);
 
     for x in &alphabet {
