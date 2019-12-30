@@ -1,5 +1,5 @@
 [package]
-name = "Enigma"
+name = "enigma"
 version = "0.1.0"
 authors = ["Aegen <kyuzo101@gmail.com>"]
 edition = "2018"
