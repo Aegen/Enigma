@@ -11,6 +11,7 @@ fn main() {
     ];
 
     // Maps letters to numbers
+    // Kodad was x
     let mut alpha_in = HashMap::new();
     alpha_in.entry("A").or_insert(0);
     alpha_in.entry("B").or_insert(1);
