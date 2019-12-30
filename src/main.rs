@@ -1,6 +1,8 @@
 mod reflector;
 mod rotors;
 
+mod rotor_assembly;
+
 use std::collections::HashMap;
 
 fn main() {
@@ -39,40 +41,22 @@ fn main() {
     alpha_in.entry("Y").or_insert(24);
     alpha_in.entry("Z").or_insert(25);
 
+    let first_rotor = rotors::RotorProp {
+        map: rotors::ENIGMA1_1,
+        cursor: 0,
+    };
+    let second_rotor = rotors::RotorProp {
+        map: rotors::ENIGMA1_2,
+        cursor: 0,
+    };
+    let third_rotor = rotors::RotorProp {
+        map: rotors::ENIGMA1_3,
+        cursor: 0,
+    };
+
+    let mut group = rotor_assembly::RotorAssembly::new(first_rotor, second_rotor, third_rotor);
+
     for x in &alphabet {
-        let inp = alpha_in[x];
-
-        let result = run_input(inp);
-        let inverse_result = run_input(result);
-
-        println!("================");
-        println!("Input:         {}", x);
-        println!("First output:  {}", alphabet[result as usize]);
-        println!("Second output: {}", alphabet[inverse_result as usize]);
+        println!("{}", alphabet[group.run(alpha_in[x]) as usize])
     }
-}
-
-fn run_input(letter: i32) -> i32 {
-    let mut rotor1 = rotors::Rotor::new(rotors::ENIGMA1_1, 0);
-    let mut rotor2 = rotors::Rotor::new(rotors::ENIGMA1_2, 0);
-    let mut rotor3 = rotors::Rotor::new(rotors::ENIGMA1_3, 0);
-
-    let the_reflector = reflector::Reflector::new();
-
-    // Pass through the rotors
-    let phase_1 = rotor3.map_wire(rotor2.map_wire(rotor1.map_wire(letter)));
-
-    // Pass through the reflector
-    let phase_2 = the_reflector.reflect(phase_1);
-
-    // Pass back through the rotors
-    let phase_3 =
-        rotor1.map_reverse_wire(rotor2.map_reverse_wire(rotor3.map_reverse_wire(phase_2)));
-
-    // These ticks exist just to make the compiler shutup about unused code
-    rotor1.tick();
-    rotor2.tick();
-    rotor3.tick();
-
-    phase_3
 }

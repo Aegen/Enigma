@@ -80,3 +80,8 @@ impl Rotor {
         ((self.reverse_wire_map[index] - self.cursor) + 26) % 26
     }
 }
+
+pub struct RotorProp {
+    pub map: [i32; 26],
+    pub cursor: i32,
+}
