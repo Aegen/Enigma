@@ -1,9 +1,41 @@
+
+
 mod reflector;
 mod rotors;
 
 use std::collections::HashMap;
+use std::io;
+
+const menu_display_settings:u32 = 1;
+const menu_change_settings:u32 = 2;
+const menu_encode_decode:u32 = 3;
+const menu_exit:u32 = 9;
 
 fn main() {
+    println!("Welcome to the Rusty Enigma, please select an option...");
+    let mut menu_input:u32;
+
+    loop {
+        print!("\x1B[2J");
+        print_menu();
+        menu_input = read_u32_input();
+        println!("Input: {}", menu_input);
+
+        match menu_input {
+            menu_display_settings => {
+                println!("You selected display settings.");
+            },
+            menu_exit => break,
+            _ => println!("Input not recognized, please try again"),
+        }
+        wait_for_enter();
+    }
+    
+
+    
+}
+
+fn encrypt_decrypt() {
     // Maps numbers to letters
     let alphabet = [
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
@@ -11,7 +43,6 @@ fn main() {
     ];
 
     // Maps letters to numbers
-    // Kodad was x
     let mut alpha_in = HashMap::new();
     alpha_in.entry("A").or_insert(0);
     alpha_in.entry("B").or_insert(1);
@@ -76,4 +107,37 @@ fn run_input(letter: i32) -> i32 {
     rotor3.tick();
 
     phase_3
+}
+
+fn print_menu() {
+    println!("Please select an option");
+    println!("{}. Display Settings", menu_display_settings);
+    println!("2. Change Settings");
+    println!("3. Encode / Decode");
+    println!("9. Exit");
+    println!("");
+}
+
+fn read_string_input() -> String {
+    let mut input = String::new();
+
+    io::stdin().read_line(&mut input)
+        .expect("Failed to read line");
+
+    return input;
+}
+
+fn read_u32_input() -> u32 {
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let n: u32 = input.trim().parse().unwrap();
+    return n;
+}
+
+fn wait_for_enter() {
+    println!("Press enter to continue");
+    let mut input = String::new();
+
+    io::stdin().read_line(&mut input)
+        .expect("Failed to read line");
 }
